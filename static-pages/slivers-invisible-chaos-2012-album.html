@@ -244,10 +244,24 @@
 	</main>
 	<footer>
 		<small lang="en">
-			This page has been updated on 15 April 2020
+			This page has been updated on 16 April 2020
 			by Viacheslav Lotsmanov<br>
 			@unclechu:matrix.org
 		</small>
 	</footer>
+	<script>
+		// Make audio playing work like a playlist
+		// (automatically play next track when previous one has ended).
+		[].map.call(document.querySelectorAll('audio'), function (audio) {
+			var next = audio.closest('li').nextSibling.nextSibling
+			if (!next) return
+			next = next.querySelector('audio')
+			
+			audio.addEventListener('ended', function () {
+				audio.currentTime = 0
+				next.play()
+			})
+		})
+	</script>
 </body>
 </html>
