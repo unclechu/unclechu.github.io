@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="author" content="Viacheslav Lotsmanov">
+	<title>SLIVERS — Невидимый Хаос</title>
+	<style>
+		/* general reset */
+		html, body, main, footer, div, span, p, small, h1, h2, h3, h4, img,
+		ul, ol, li, audio, source, a, strong {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font-family: sans-serif;
+			vertical-align: baseline;
+		}
+		body {
+			line-height: 1;
+			background: #020300;
+			color: #92462e;
+			padding: 20px;
+			min-width: 600px;
+			box-sizing: border-box;
+		}
+		main, h1, h2, p, footer {
+			line-height: 1.5em;
+		}
+		main, footer {
+			text-align: center;
+		}
+		h1 {
+			font-weight: bold;
+			font-size: 200%;
+		}
+		h2 {
+			font-weight: bold;
+			font-size: 120%;
+			margin-top: 20px;
+		}
+		h1 + h2 {
+			margin-top: 0;
+		}
+		h3 {
+			font-weight: bold;
+			font-size: 100%;
+			margin-top: 20px;
+		}
+		h4 {
+			display: inline;
+			font-weight: normal;
+			font-size: 100%;
+		}
+		img {
+			display: inline-block;
+			width: auto;
+			height: auto;
+			min-width: 400px;
+			max-width: 100%;
+			min-height: 400px;
+			border: 3px solid #92462e;
+			box-sizing: border-box;
+			font-size: 100%;
+		}
+		audio {
+			display: block;
+			width: 100%;
+		}
+		p {
+			margin-top: 20px;
+		}
+		p.info {
+			width: 400px;
+			margin: 20px auto 0 auto;
+			text-align: left;
+		}
+		a {
+			color: #bbb;
+			text-decoration: underline;
+			display: block;
+			transition: color .3s ease-in-out;
+		}
+		a:hover, a:active {
+			color: #777;
+		}
+		ul, ol {
+			list-style-type: none;
+			counter-reset: section;
+			width: 400px;
+			margin: 0 auto;
+			text-align: left;
+			margin-top: 20px;
+			position: relative;
+		}
+		ul li, ol li {
+			margin-top: 10px;
+		}
+		ol li::before, ul li::before {
+			position: absolute;
+			margin-left: -20px;
+		}
+		ol li::before {
+			counter-increment: section;
+			content: counters(section, "") ". ";
+		}
+		ul li::before {
+			content: "• ";
+		}
+		footer {
+			margin-top: 40px;
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<h1>SLIVERS — Невидимый Хаос</h1>
+		<h2>LP 2012</h2>
+		<p>
+			<img
+				alt="Фронтальная обложка альбома"
+				src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/1fdc4742982e7a25fe895db5fc448b52e0358eaa"
+			>
+		</p>
+		<p>
+			<img
+				alt="Оборотная сторона обложки в коробке от компакт-диска со списком песен"
+				src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/b04d23f921fecbe118a993ee56c5a4d10b398299"
+			>
+		</p>
+		<h2>Аудиозаписи</h2>
+		<ol>
+			<li>
+				<h4>Мы создали ложь</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/a861d8d3de2d53d627ff73f9b89ed7bb6a17f40f" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Фиаско</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/37d0dc3bdd097b7ceeb0b302990e4afb65aeb493" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Серое небо</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/6879ec61e3012714c18ff6f320f9cdd464ff3d3f" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Настроение тишины</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/0ed518ecf3ad4abb47299562e0e28a3a39b1b696" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Ухожу с приветом</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/1227ebe7a67d83bb434cd14b6a986a7bfb920a40" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Пойми меня</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/bcec2de56160db8505fa3cdf811972d4c8fa3681" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Как жаль, что мне не сделать рая</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/e6e6e1ec006c9694006f0a9a472e88abfb1eab64" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Под снегом</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/50fd1317c5bbeb07ade92ba280c61c6d213b312d" type="audio/mpeg">
+				</audio>
+			</li>
+			<li>
+				<h4>Невидимый хаос</h4>
+				<audio controls>
+					<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/8a3bdfd399172d0dd657fc31479f1ba8dd3561bf" type="audio/mpeg">
+				</audio>
+			</li>
+		</ol>
+		<h2>Арты для компакт-диска</h2>
+		<p>
+			<img
+				alt="Принт на компакт-диске"
+				src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/b74c43b98eb8d2aac602466bd5d86c51fd096487"
+			>
+		</p>
+		<p>
+			<img
+				alt="Развёртка первой страницы буклета со списком участников группы и людей, участвовавших в записи, сведении и мастеринге альбома"
+				src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/45b7415a33a02b209c8298e7affdc23b922bb7af"
+			>
+		</p>
+		<p>
+			<img
+				alt="Развёртка второй страницы буклета с художественным изображением"
+				src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/72b5266cad7b466673835dd7bdcf97413c8be745"
+			>
+		</p>
+		<p>
+			<img
+				alt="Внутренняя часть коробки от компакт-диска с фоновым изображением"
+				src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/31100592f5a187fee0385aebfade55d4218814cf"
+			>
+		</p>
+		<h2>Информация</h2>
+		<p class="info">
+			Альтернативная рок-группа из Черкесска.
+			Образована весной 2007 года.
+			Вскоре после выхода этого дебютного альбома группа распалась.
+			Впоследствии фронтменом Ильясом была образована другая группа под
+			названием <strong>Кабирия</strong> в Ростове-на-Дону.
+		</p>
+		<h2>Ссылки</h2>
+		<h3>Скачать альбом</h3>
+		<ul>
+			<li>
+				<a href="https://rutracker.org/forum/viewtopic.php?t=4189292">
+					(Alternative rock / Grunge / Grungegaze) SLIVERS - Невидимый Хаос - 2012, FLAC (tracks), lossless :: RuTracker.org
+				</a>
+				Torrent
+			</li>
+			<li>
+				<a href="https://rutracker.org/forum/viewtopic.php?t=4190651">
+					(Alternative rock / Grunge / Grungegaze) SLIVERS - Невидимый Хаос - 2012, MP3, 320 kbps :: RuTracker.org
+				</a>
+				Torrent
+			</li>
+		</ul>
+		<h3>Прочие ссылки</h3>
+		<ul>
+			<li>
+				<a href="https://kabiria.bandcamp.com/">Кабирия on Bandcamp</a>
+				Впоследствии образованная фронтменом группа
+				после распада <strong>SLIVERS</strong>.
+			</li>
+		</ul>
+	</main>
+	<footer>
+		<small lang="en">
+			This page has been updated on 15 April 2020
+			by Viacheslav Lotsmanov<br>
+			@unclechu:matrix.org
+		</small>
+	</footer>
+</body>
+</html>
