@@ -7,7 +7,7 @@
 	<style>
 		/* general reset */
 		html, body, main, footer, section, div, span, p, small, h1, h2, h3, h4,
-		img, ul, ol, li, audio, source, a, strong {
+		img, ul, ol, li, audio, source, a, strong, dl, dt, dd {
 			margin: 0;
 			padding: 0;
 			border: 0;
@@ -28,7 +28,7 @@
 				0px 0px 2px black,
 				0px 0px 1px black;
 		}
-		main, h1, h2, p, footer {
+		main, h1, h2, p, footer, dd, dt, dd {
 			line-height: 1.5em;
 		}
 		main, footer {
@@ -127,8 +127,45 @@
 		footer {
 			margin-top: 40px;
 		}
+		input:disabled, input:disabled + span {
+			cursor: not-allowed;
+		}
 		input:disabled + span {
-			color: #333;
+			color: #555;
+		}
+		dl {
+			display: block;
+			width: 400px;
+			margin: 0 auto;
+			text-align: left;
+		}
+		dl > dt {
+			display: block;
+			font-weight: bold;
+			margin-top: 20px;
+		}
+		dl > dd {
+			display: block;
+			padding-left: 20px;
+		}
+		dl > dd > label {
+			margin-top: 10px;
+			display: block;
+			position: relative;
+		}
+		dl > dd > label > input + span::before {
+			content: "";
+			display: block;
+			cursor: pointer;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+		}
+		dl > dd > label > input:disabled + span::before {
+			cursor: not-allowed;
 		}
 	</style>
 </head>
@@ -286,32 +323,38 @@
 		</small>
 	</footer>
 	<script type="text/template" id="js-checkboxes-template">
-		<ul>
-			<li><label>
-				<input type="checkbox" id="js-playlist" checked>
-				<span>Плейлист (воспроизводить следующий трек
-				после окончания предыдущего)</span>
-			</label></li>
-			<li><label>
-				<input type="checkbox" id="js-repeat">
-				<span>Повторять плейлист по кругу</span>
-			</label></li>
-			<li><label>
-				<input type="checkbox" id="js-reset-next-time" checked>
-				<span>Сбрасывать треки к началу после окончания
-				при переходе к следующему треку в плейлисте</span>
-			</label></li>
-			<li><label>
-				<input type="checkbox" id="js-one-at-a-time" checked>
-				<span>Останавливать предыдущий играющий трек
-				при включении другого (один играющий трек за раз)</span>
-			</label></li>
-			<li><label>
-				<input type="checkbox" id="js-reset-switch-time" checked>
-				<span>Сбрасывать проигрывание к началу трека
-				при переключении между играющими треками</span>
-			</label></li>
-		</ul>
+		<dl>
+			<dt>Плейлист</dt>
+			<dd>
+				<label>
+					<input type="checkbox" id="js-playlist" checked>
+					<span>Плейлист (воспроизводить следующий трек
+					после окончания предыдущего)</span>
+				</label>
+				<label>
+					<input type="checkbox" id="js-repeat">
+					<span>Повторять плейлист по кругу</span>
+				</label>
+				<label>
+					<input type="checkbox" id="js-reset-next-time" checked>
+					<span>Сбрасывать треки к началу после окончания
+					при переходе к следующему треку в плейлисте</span>
+				</label>
+			</dd>
+			<dt>Последовательность</dt>
+			<dd>
+				<label>
+					<input type="checkbox" id="js-one-at-a-time" checked>
+					<span>Останавливать предыдущий играющий трек
+					при включении другого (один играющий трек за раз)</span>
+				</label>
+				<label>
+					<input type="checkbox" id="js-reset-switch-time" checked>
+					<span>Сбрасывать проигрывание к началу трека
+					при переключении между играющими треками</span>
+				</label>
+			</dd>
+		</dl>
 	</script>
 	<script>
 		var allAudioTags = document.querySelectorAll('audio')
