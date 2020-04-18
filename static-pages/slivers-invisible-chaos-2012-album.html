@@ -7,7 +7,7 @@
 	<style>
 		/* general reset */
 		html, body, main, footer, section, div, span, p, small, h1, h2, h3, h4,
-		img, ul, ol, li, audio, source, a, strong, dl, dt, dd {
+		img, ul, ol, li, audio, source, a, strong, em, dl, dt, dd {
 			margin: 0;
 			padding: 0;
 			border: 0;
@@ -28,15 +28,7 @@
 				0px 0px 2px black,
 				0px 0px 1px black;
 		}
-		main, h1, h2, p, footer, dd, dt, dd {
-			line-height: 1.5em;
-		}
-		main, footer {
-			z-index: 0;
-			text-align: center;
-		}
-		main::before {
-			content: "";
+		.underlay {
 			display: block;
 			position: fixed;
 			left: 0;
@@ -47,6 +39,13 @@
 			background: url(https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/31100592f5a187fee0385aebfade55d4218814cf) no-repeat center top fixed;
 			background-size: cover;
 			opacity: 0.4;
+		}
+		main, h1, h2, p, footer, dd, dt, dd {
+			line-height: 1.5em;
+		}
+		main, footer {
+			z-index: 0;
+			text-align: center;
 		}
 		h1 {
 			font-weight: bold;
@@ -101,6 +100,12 @@
 		}
 		a:hover, a:active {
 			color: #777;
+		}
+		em.info {
+			display: block;
+			width: 400px;
+			margin: 0 auto;
+			text-align: left;
 		}
 		ul, ol {
 			list-style-type: none;
@@ -171,6 +176,7 @@
 	</style>
 </head>
 <body>
+	<div class="underlay"></div>
 	<main>
 		<section>
 			<h1>SLIVERS — Невидимый Хаос</h1>
@@ -190,62 +196,146 @@
 		</section>
 		<section>
 			<h2>Аудиозаписи</h2>
-			<ol>
-				<li>
-					<h4>Мы создали ложь</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/a861d8d3de2d53d627ff73f9b89ed7bb6a17f40f" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Фиаско</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/37d0dc3bdd097b7ceeb0b302990e4afb65aeb493" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Серое небо</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/6879ec61e3012714c18ff6f320f9cdd464ff3d3f" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Настроение тишины</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/0ed518ecf3ad4abb47299562e0e28a3a39b1b696" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Ухожу с приветом</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/1227ebe7a67d83bb434cd14b6a986a7bfb920a40" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Пойми меня</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/bcec2de56160db8505fa3cdf811972d4c8fa3681" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Как жаль, что мне не сделать рая</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/e6e6e1ec006c9694006f0a9a472e88abfb1eab64" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Под снегом</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/50fd1317c5bbeb07ade92ba280c61c6d213b312d" type="audio/mpeg">
-					</audio>
-				</li>
-				<li>
-					<h4>Невидимый хаос</h4>
-					<audio controls>
-						<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/8a3bdfd399172d0dd657fc31479f1ba8dd3561bf" type="audio/mpeg">
-					</audio>
-				</li>
-			</ol>
+			<section>
+				<h3>MP3</h3>
+				<ol>
+					<li>
+						<h4>Мы создали ложь</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/a861d8d3de2d53d627ff73f9b89ed7bb6a17f40f" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/a861d8d3de2d53d627ff73f9b89ed7bb6a17f40f" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Фиаско</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/37d0dc3bdd097b7ceeb0b302990e4afb65aeb493" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/37d0dc3bdd097b7ceeb0b302990e4afb65aeb493" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Серое небо</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/6879ec61e3012714c18ff6f320f9cdd464ff3d3f" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/6879ec61e3012714c18ff6f320f9cdd464ff3d3f" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Настроение тишины</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/0ed518ecf3ad4abb47299562e0e28a3a39b1b696" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/0ed518ecf3ad4abb47299562e0e28a3a39b1b696" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Ухожу с приветом</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/1227ebe7a67d83bb434cd14b6a986a7bfb920a40" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/1227ebe7a67d83bb434cd14b6a986a7bfb920a40" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Пойми меня</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/bcec2de56160db8505fa3cdf811972d4c8fa3681" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/bcec2de56160db8505fa3cdf811972d4c8fa3681" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Как жаль, что мне не сделать рая</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/e6e6e1ec006c9694006f0a9a472e88abfb1eab64" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/e6e6e1ec006c9694006f0a9a472e88abfb1eab64" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Под снегом</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/50fd1317c5bbeb07ade92ba280c61c6d213b312d" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/50fd1317c5bbeb07ade92ba280c61c6d213b312d" type="audio/mpeg">
+						</audio>
+					</li>
+					<li>
+						<h4>Невидимый хаос</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/8a3bdfd399172d0dd657fc31479f1ba8dd3561bf" type="audio/mpeg">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/8a3bdfd399172d0dd657fc31479f1ba8dd3561bf" type="audio/mpeg">
+						</audio>
+					</li>
+				</ol>
+			</section>
+			<section>
+				<h3>FLAC</h3>
+				<em class="info">
+					Формат без потерь качества, более требователен
+					к стабильности и пропускной способности интернет-соединения.
+				</em>
+				<ol>
+					<li>
+						<h4>Мы создали ложь</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/c4090058f7d2f5f9eb2172f447844096bd63e4aa" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/c4090058f7d2f5f9eb2172f447844096bd63e4aa" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Фиаско</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/a1fd30bdedfaf3c8989f12e1a5d9537aaa1a3608" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/a1fd30bdedfaf3c8989f12e1a5d9537aaa1a3608" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Серое небо</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/4191d26a79d0ef83ebf34bb8e998984c34877f90" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/4191d26a79d0ef83ebf34bb8e998984c34877f90" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Настроение тишины</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/97b774773008c5ba499f4b2f4c205db370d2592b" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/97b774773008c5ba499f4b2f4c205db370d2592b" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Ухожу с приветом</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/9c8e61256b5a27e1aee1c7b873eff4329f8be8c8" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/9c8e61256b5a27e1aee1c7b873eff4329f8be8c8" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Пойми меня</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/09f6b83936888fd5dc1cd4f872a3cf60777e5b45" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/09f6b83936888fd5dc1cd4f872a3cf60777e5b45" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Как жаль, что мне не сделать рая</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/c5baa62e8725dba16035f6015e197fb00677bbbe" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/c5baa62e8725dba16035f6015e197fb00677bbbe" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Под снегом</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/ee0439072d3a4b6b6a3c5c796ccf614a32a7f294" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/ ee0439072d3a4b6b6a3c5c796ccf614a32a7f294" type="audio/flac">
+						</audio>
+					</li>
+					<li>
+						<h4>Невидимый хаос</h4>
+						<audio controls>
+							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/10e8e3887e183aa338eeb280946d70785ef81681" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/10e8e3887e183aa338eeb280946d70785ef81681" type="audio/flac">
+						</audio>
+					</li>
+				</ol>
+			</section>
 			<div id="js-checkboxes"></div>
 		</section>
 		<section>
@@ -323,6 +413,50 @@
 			@unclechu:matrix.org
 		</small>
 	</footer>
+	<script>
+		// Alternative domain source for images failed to load
+		function imgResourceFailover(isCssBackground, el) {
+			if (isCssBackground && !window.getComputedStyle) return
+			var fakeImg = new Image()
+			
+			var src = !isCssBackground ? el.src :
+				window.getComputedStyle(el)
+					.getPropertyValue('background-image')
+					.replace(/(^url\(|\)$)/g, '')
+					.replace(/^"(.*)"$/, '$1')
+				
+			function onError() {
+				src = src.replace(
+					/\/\/matrix-client\.matrix\.org\//g,
+					'//pony.modular.im/'
+				)
+				if (isCssBackground) el.style.backgroundImage = 'url("'+src+'")'
+				else el.src = src
+				done()
+			}
+			
+			function onLoad() { done() }
+			
+			function done() {
+				fakeImg.removeEventListener('error', onError)
+				fakeImg.removeEventListener('load', onLoad)
+				fakeImg.remove()
+				onError = onLoad = fakeImg = undefined
+			}
+			
+			fakeImg.addEventListener('error', onError)
+			fakeImg.addEventListener('load', onLoad)
+			fakeImg.src = src
+		}
+		
+		// All <img> tags
+		;[].forEach.call(document.querySelectorAll('img'), function (img) {
+			imgResourceFailover(false, img)
+		})
+		
+		// CSS background-image elements
+		imgResourceFailover(true, document.querySelector('.underlay'))
+	</script>
 	<script type="text/template" id="js-checkboxes-template">
 		<dl>
 			<dt>Плейлист</dt>
@@ -466,9 +600,9 @@
 					if (checkbox.resetNextTime.checked) next.currentTime = 0
 					next.play()
 				} else if (checkbox.repeat.checked) {
-					var x = allAudioTags[0]
-					if (checkbox.resetNextTime.checked) x.currentTime = 0
-					x.play()
+					var first = audio.closest('ol').querySelector('audio')
+					if (checkbox.resetNextTime.checked) first.currentTime = 0
+					first.play()
 				}
 			})
 			
