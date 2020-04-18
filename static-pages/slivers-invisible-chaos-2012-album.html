@@ -337,8 +337,17 @@
 				</label>
 				<label>
 					<input type="checkbox" id="js-reset-next-time" checked>
-					<span>Сбрасывать треки к началу после окончания
-					при переходе к следующему треку в плейлисте</span>
+					<span>Сбрасывать треки к их началу при переходе к следующему
+					треку в плейлисте после окончания предыдущего</span>
+				</label>
+			</dd>
+			<dt>Синхронизация</dt>
+			<dd>
+				<label>
+					<input type="checkbox" id="js-sync-volume" checked>
+					<span>Общая регулировка громкости (при изменении громкости
+					одного трека — остальные треки становятся той же
+					громкости)</span>
 				</label>
 			</dd>
 			<dt>Последовательность</dt>
@@ -365,8 +374,9 @@
 		
 		var checkbox = {
 			playlist: document.getElementById('js-playlist'),
-			resetNextTime: document.getElementById('js-reset-next-time'),
 			repeat: document.getElementById('js-repeat'),
+			resetNextTime: document.getElementById('js-reset-next-time'),
+			syncVolume: document.getElementById('js-sync-volume'),
 			oneAtATime: document.getElementById('js-one-at-a-time'),
 			resetSwitchTime: document.getElementById('js-reset-switch-time')
 		}
@@ -444,6 +454,16 @@
 					if (checkbox.oneAtATime.checked)
 						playingTracks.forEach(function (x) { x.pause() })
 				}
+			})
+			
+			audio.addEventListener('volumechange', function () {
+				if (!checkbox.syncVolume.checked) return
+				
+				;[].forEach.call(allAudioTags, function (x) {
+					if (x === audio) return
+					x.volume = audio.volume
+					x.muted = audio.muted
+				})
 			})
 		})
 	</script>
