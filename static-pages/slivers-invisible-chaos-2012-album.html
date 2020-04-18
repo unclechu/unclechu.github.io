@@ -32,6 +32,7 @@
 			line-height: 1.5em;
 		}
 		main, footer {
+			z-index: 0;
 			text-align: center;
 		}
 		main::before {
@@ -148,7 +149,7 @@
 			display: block;
 			padding-left: 20px;
 		}
-		dl > dd > label {
+		dl > dd > label, dl > dd > div {
 			margin-top: 10px;
 			display: block;
 			position: relative;
@@ -363,6 +364,14 @@
 					при переключении между играющими треками</span>
 				</label>
 			</dd>
+			<dt>Настройки</dt>
+			<dd>
+				<div>
+					<button id="js-reset-settings-to-defaults">
+						Сбросить настройки к стандартным
+					</button>
+				</div>
+			</dd>
 		</dl>
 	</script>
 	<script>
@@ -380,6 +389,39 @@
 			oneAtATime: document.getElementById('js-one-at-a-time'),
 			resetSwitchTime: document.getElementById('js-reset-switch-time')
 		}
+		
+		var defaultCheckboxesState = {
+			playlist: true,
+			repeat: false,
+			resetNextTime: true,
+			syncVolume: true,
+			oneAtATime: true,
+			resetSwitchTime: true
+		}
+		
+		var resetSettingsBtn =
+			document.getElementById('js-reset-settings-to-defaults')
+		
+		function triggerFakeCheckboxesChangeEvent() {
+			Object.values(checkbox).forEach(function (x) {
+				x.dispatchEvent(new Event('change'))
+			})
+		}
+		
+		function applyCheckboxesState(state) {
+			Object.keys(state).forEach(function (stateKey) {
+				if (checkbox[stateKey] === undefined) return
+				checkbox[stateKey].checked = state[stateKey]
+			})
+			
+			triggerFakeCheckboxesChangeEvent()
+		}
+		
+		resetSettingsBtn.addEventListener('click', function (e) {
+			e.preventDefault()
+			if (!confirm('Вы уверены что хотите сбросить настройки?')) return
+			applyCheckboxesState(defaultCheckboxesState)
+		})
 		
 		checkbox.playlist.addEventListener('change', function () {
 			checkbox.repeat.disabled = !this.checked
@@ -406,9 +448,7 @@
 			checkbox.resetSwitchTime.disabled = !this.checked
 		})
 		
-		Object.values(checkbox).forEach(function (x) {
-			x.dispatchEvent(new Event('change'))
-		})
+		applyCheckboxesState(defaultCheckboxesState)
 		
 		;[].forEach.call(allAudioTags, function (audio) {
 			// First sibling is a text node
