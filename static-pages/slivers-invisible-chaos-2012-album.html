@@ -15,18 +15,40 @@
 			font-family: sans-serif;
 			vertical-align: baseline;
 		}
+		input, button {
+			font-size: 100%;
+			font-family: sans-serif;
+			vertical-align: baseline;
+		}
 		body {
 			line-height: 1;
-			color: #92462e;
 			padding: 20px;
 			min-width: 600px;
 			box-sizing: border-box;
-			background: #020300;
 			text-shadow:
 				0px 0px 4px black,
 				0px 0px 3px black,
 				0px 0px 2px black,
 				0px 0px 1px black;
+		}
+		body, button {
+			background: #020300;
+			color: #92462e;
+		}
+		button {
+			padding: 8px;
+			margin: 0;
+			border: 3px solid;
+			border-left-color: #92462e;
+			border-top-color: #92462e;
+			border-right-color: #621c08;
+			border-bottom-color: #621c08;
+		}
+		button:active {
+			border-left-color: #621c08;
+			border-top-color: #621c08;
+			border-right-color: #92462e;
+			border-bottom-color: #92462e;
 		}
 		.underlay {
 			display: block;
@@ -88,7 +110,6 @@
 			margin-top: 20px;
 		}
 		p.info {
-			width: 400px;
 			margin: 20px auto 0 auto;
 			text-align: left;
 		}
@@ -103,14 +124,12 @@
 		}
 		em.info {
 			display: block;
-			width: 400px;
 			margin: 0 auto;
 			text-align: left;
 		}
 		ul, ol {
 			list-style-type: none;
 			counter-reset: section;
-			width: 400px;
 			margin: 0 auto;
 			text-align: left;
 			margin-top: 20px;
@@ -118,10 +137,12 @@
 		}
 		ul li, ol li {
 			margin-top: 10px;
+			position: relative;
 		}
 		ol li::before, ul li::before {
 			position: absolute;
-			margin-left: -20px;
+			left: -5px;
+			transform: translateX(-100%);
 		}
 		ol li::before {
 			counter-increment: section;
@@ -132,6 +153,11 @@
 		}
 		footer {
 			margin-top: 40px;
+			line-height: 1.5em;
+		}
+		footer > small {
+			display: block;
+			line-height: 1.5em;
 		}
 		input:disabled, input:disabled + span {
 			cursor: not-allowed;
@@ -141,7 +167,6 @@
 		}
 		dl {
 			display: block;
-			width: 400px;
 			margin: 0 auto;
 			text-align: left;
 		}
@@ -172,6 +197,71 @@
 		}
 		dl > dd > label > input:disabled + span::before {
 			cursor: not-allowed;
+		}
+		section.font-size-switch > ul {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		section.font-size-switch > ul > li {
+			display: inline-block;
+		}
+		section.font-size-switch > ul > li::before {
+			display: none;
+		}
+		section.font-size-switch > ul > li:nth-child(2),
+		html.font-size-2 section.font-size-switch .sized,
+		html.font-size-2 main,
+		html.font-size-2 footer > small {
+			font-size: 200%;
+		}
+		section.font-size-switch > ul > li:nth-child(3),
+		html.font-size-3 section.font-size-switch .sized,
+		html.font-size-3 main,
+		html.font-size-3 footer > small {
+			font-size: 300%;
+		}
+		p.info,
+		em.info,
+		ul,
+		ol,
+		dl {
+			max-width: 400px;
+		}
+		html.font-size-2 p.info,
+		html.font-size-2 em.info,
+		html.font-size-2 ul,
+		html.font-size-2 ol,
+		html.font-size-2 dl {
+			max-width: 600px;
+			padding-left: 40px;
+		}
+		html.font-size-3 p.info,
+		html.font-size-3 em.info,
+		html.font-size-3 ul,
+		html.font-size-3 ol,
+		html.font-size-3 dl {
+			max-width: 800px;
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+		html.font-size-3 body {
+			min-width: 800px;
+		}
+		html.font-size-2 main input,
+		section.font-size-switch > ul > li:nth-child(2) input {
+			transform: scale(2) translateY(-10%);
+			margin-right: 5px;
+		}
+		html.font-size-3 main input,
+		section.font-size-switch > ul > li:nth-child(3) input {
+			transform: scale(3) translateY(-16%);
+			margin-right: 10px;
+		}
+		section.font-size-switch > ul > li:nth-child(2) {
+			margin-left: 50px;
+		}
+		section.font-size-switch > ul > li:nth-child(3) {
+			margin-left: 60px;
 		}
 	</style>
 </head>
@@ -407,6 +497,7 @@
 		</section>
 	</main>
 	<footer>
+		<div id="js-font-size-switcher"></div>
 		<small lang="en">
 			This page has been updated on 19 April 2020
 			by Viacheslav Lotsmanov<br>
@@ -450,7 +541,7 @@
 		}
 		
 		// All <img> tags
-		;[].forEach.call(document.querySelectorAll('img'), function (img) {
+		Object.values(document.querySelectorAll('img')).forEach(function (img) {
 			imgResourceFailover(false, img)
 		})
 		
@@ -512,12 +603,39 @@
 			</dd>
 		</dl>
 	</script>
+	<script type="text/template" id="js-font-size-switcher-template">
+		<section class="font-size-switch">
+			<div class="sized"><h2>Размер шрифта</h2></div>
+			<ul>
+				<li>
+					<label>
+						<input type="radio" name="font-size" value="1">
+						<span>A1</span>
+					</label>
+				</li>
+				<li>
+					<label>
+						<input type="radio" name="font-size" value="2">
+						<span>A2</span>
+					</label>
+				</li>
+				<li>
+					<label>
+						<input type="radio" name="font-size" value="3">
+						<span>A3</span>
+					</label>
+				</li>
+			</ul>
+		</section>
+	</script>
 	<script>
 		var allAudioTags = document.querySelectorAll('audio')
-		var checkboxes = document.getElementById('js-checkboxes')
 		
-		checkboxes.innerHTML =
+		document.getElementById('js-checkboxes').innerHTML =
 			document.getElementById('js-checkboxes-template').innerHTML
+		
+		document.getElementById('js-font-size-switcher').innerHTML =
+			document.getElementById('js-font-size-switcher-template').innerHTML
 		
 		var checkbox = {
 			playlist: document.getElementById('js-playlist'),
@@ -573,7 +691,8 @@
 			
 			// <audio> tracks which are playing at the moment
 			var playingTracks =
-				[].filter.call(allAudioTags, function (x) { return !x.paused })
+				Object.values(allAudioTags)
+					.filter(function (x) { return !x.paused })
 			
 			// Stop all playing track but the first one playing
 			// in case there are more than one playing tracks at the moment.
@@ -588,20 +707,49 @@
 			checkbox.resetSwitchTime.disabled = !this.checked
 		})
 		
+		var html = document.querySelector('html')
+		var fontSizeSwitcherWrap = document.getElementById('js-font-size-switcher')
+		var fontSizeSwitchers = fontSizeSwitcherWrap.querySelectorAll('input')
+		
+		function triggerFakeChangeFontSizeEvent() {
+			var el = fontSizeSwitcherWrap.querySelector('input:checked')
+			if (el) el.dispatchEvent(new Event('change'))
+		}
+		
+		function applyFontSize(fontSize) {
+			if (!fontSize) fontSize = 1
+			fontSizeSwitcherWrap.querySelectorAll('input')[--fontSize].checked = true
+			triggerFakeChangeFontSizeEvent()
+		}
+		
+		Object.values(fontSizeSwitchers).forEach(function (input) {
+			input.addEventListener('change', function () {
+				if (!this.checked) return
+				html.setAttribute('class', 'font-size-'+this.value)
+			})
+		})
+		
 		applyCheckboxesState(defaultCheckboxesState)
 		
-		function savePageSettings() {
-			var settings =
-				!checkbox.storeSettings.checked ? { storeSettings: false } :
-					Object.keys(checkbox).reduce(function (res, key) {
-						res[key] = checkbox[key].checked
-						return res
-					}, {})
+		function savePageSettings() { // Depends on window.localStorage
+			var settings
+			
+			if (checkbox.storeSettings.checked) {
+				settings = Object.keys(checkbox).reduce(function (res, key) {
+					res[key] = checkbox[key].checked
+					return res
+				}, {})
+				
+				var fontSize = fontSizeSwitcherWrap.querySelector('input:checked')
+				settings.fontSize = fontSize ? parseInt(fontSize.value) : 1
+			} else {
+				settings = { storeSettings: false }
+			}
 			
 			window.localStorage.setItem('page-settings', JSON.stringify(settings))
 		}
 		
-		function restorePageSettings() {
+		function restorePageSettings() { // Depends on window.localStorage
 			var settings = window.localStorage.getItem('page-settings')
 			if (!settings) return // Have no saved settings yet
 			
@@ -609,33 +757,48 @@
 				settings = JSON.parse(settings)
 				if (typeof settings !== 'object')
 					throw new Error('Saved page settings value is not an object')
+				var k
 				if (Object.keys(settings).some(function (key) {
-					return typeof settings[key] !== 'boolean'
+					return (
+						k = key,
+						(key !== 'fontSize' && typeof settings[key] !== 'boolean') ||
+						(key === 'fontSize' && typeof settings[key] !== 'number')
+					)
 				}))
-					throw new Error('Some key of saved page settings is not a boolean value')
+					throw new Error(
+						JSON.stringify(k) + ' key of saved page settings has incorrect type'
+					)
 			} catch (e) {
 				// You can just save them again to fix it
 				if (console && console.error) {
 					console.error('Saved page settings are corrupted! Error: ', e)
-					console.error('Saved page settings value is:', '"'+settings+'"')
+					console.error('Saved page settings value is:', JSON.stringify(settings))
 				}
 				return
 			}
 			
 			applyCheckboxesState(settings)
+			applyFontSize(settings.fontSize)
 		}
+		
+		if (!fontSizeSwitcherWrap.querySelector('input:checked')) applyFontSize()
 		
 		if (window.localStorage) {
 			restorePageSettings()
-			Object.keys(checkbox).forEach(function (key) {
-				checkbox[key].addEventListener('change', function () {
+			Object.values(checkbox).forEach(function (input) {
+				input.addEventListener('change', function () {
+					savePageSettings()
+				})
+			})
+			Object.values(fontSizeSwitchers).forEach(function (input) {
+				input.addEventListener('change', function () {
 					savePageSettings()
 				})
 			})
 		} else
 			checkbox.storeSettings.closest('label').style.display = 'none'
 		
-		;[].forEach.call(allAudioTags, function (audio) {
+		Object.values(allAudioTags).forEach(function (audio) {
 			// First sibling is a text node
 			var next = audio.closest('li').nextSibling
 			if (next) next = next.nextSibling
@@ -661,8 +824,8 @@
 				// <audio> tracks which are playing at the moment
 				// except current <audio> which is just started to play.
 				var playingTracks =
-					[].filter.call(allAudioTags, function (x) {
-						return x !== audio && !x.paused
+					Object.values(allAudioTags).filter(function (el) {
+						return el !== audio && !el.paused
 					})
 				
 				if (playingTracks.length > 0) {
@@ -677,22 +840,21 @@
 					
 					// Only one playing track at a time
 					if (checkbox.oneAtATime.checked)
-						playingTracks.forEach(function (x) { x.pause() })
+						playingTracks.forEach(function (el) { el.pause() })
 				}
 			})
 			
 			audio.addEventListener('volumechange', function () {
 				if (!checkbox.syncVolume.checked) return
 				
-				;[].forEach.call(allAudioTags, function (x) {
-					if (x === audio) return
-					x.volume = audio.volume
-					x.muted = audio.muted
+				Object.values(allAudioTags).forEach(function (el) {
+					if (el === audio) return
+					el.volume = audio.volume
+					el.muted = audio.muted
 				})
 			})
 		})
 	</script>
 </body>
 </html>
-<!-- TODO Add font size switcher (store this value too) -->
 <!-- TODO Add big play/pause/repeat buttons at the top of playlist -->
