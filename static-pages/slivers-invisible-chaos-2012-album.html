@@ -324,7 +324,7 @@
 						<h4>Под снегом</h4>
 						<audio controls>
 							<source src="https://matrix-client.matrix.org/_matrix/media/r0/download/pony.modular.im/ee0439072d3a4b6b6a3c5c796ccf614a32a7f294" type="audio/flac">
-							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/ ee0439072d3a4b6b6a3c5c796ccf614a32a7f294" type="audio/flac">
+							<source src="https://pony.modular.im/_matrix/media/r0/download/pony.modular.im/ee0439072d3a4b6b6a3c5c796ccf614a32a7f294" type="audio/flac">
 						</audio>
 					</li>
 					<li>
@@ -408,7 +408,7 @@
 	</main>
 	<footer>
 		<small lang="en">
-			This page has been updated on 18 April 2020
+			This page has been updated on 19 April 2020
 			by Viacheslav Lotsmanov<br>
 			@unclechu:matrix.org
 		</small>
@@ -462,7 +462,7 @@
 			<dt>Плейлист</dt>
 			<dd>
 				<label>
-					<input type="checkbox" id="js-playlist" checked>
+					<input type="checkbox" id="js-playlist">
 					<span>Плейлист (воспроизводить следующий трек
 					после окончания предыдущего)</span>
 				</label>
@@ -471,7 +471,7 @@
 					<span>Повторять плейлист по кругу</span>
 				</label>
 				<label>
-					<input type="checkbox" id="js-reset-next-time" checked>
+					<input type="checkbox" id="js-reset-next-time">
 					<span>Сбрасывать треки к их началу при переходе к следующему
 					треку в плейлисте после окончания предыдущего</span>
 				</label>
@@ -479,7 +479,7 @@
 			<dt>Синхронизация</dt>
 			<dd>
 				<label>
-					<input type="checkbox" id="js-sync-volume" checked>
+					<input type="checkbox" id="js-sync-volume">
 					<span>Общая регулировка громкости (при изменении громкости
 					одного трека — остальные треки становятся той же
 					громкости)</span>
@@ -488,18 +488,22 @@
 			<dt>Последовательность</dt>
 			<dd>
 				<label>
-					<input type="checkbox" id="js-one-at-a-time" checked>
+					<input type="checkbox" id="js-one-at-a-time">
 					<span>Останавливать предыдущий играющий трек
 					при включении другого (один играющий трек за раз)</span>
 				</label>
 				<label>
-					<input type="checkbox" id="js-reset-switch-time" checked>
+					<input type="checkbox" id="js-reset-switch-time">
 					<span>Сбрасывать проигрывание к началу трека
 					при переключении между играющими треками</span>
 				</label>
 			</dd>
 			<dt>Настройки</dt>
 			<dd>
+				<label>
+					<input type="checkbox" id="js-store-settings">
+					<span>Сохранять настройки между перезагрузками страницы</span>
+				</label>
 				<div>
 					<button id="js-reset-settings-to-defaults">
 						Сбросить настройки к стандартным
@@ -521,7 +525,8 @@
 			resetNextTime: document.getElementById('js-reset-next-time'),
 			syncVolume: document.getElementById('js-sync-volume'),
 			oneAtATime: document.getElementById('js-one-at-a-time'),
-			resetSwitchTime: document.getElementById('js-reset-switch-time')
+			resetSwitchTime: document.getElementById('js-reset-switch-time'),
+			storeSettings: document.getElementById('js-store-settings')
 		}
 		
 		var defaultCheckboxesState = {
@@ -530,7 +535,8 @@
 			resetNextTime: true,
 			syncVolume: true,
 			oneAtATime: true,
-			resetSwitchTime: true
+			resetSwitchTime: true,
+			storeSettings: true
 		}
 		
 		var resetSettingsBtn =
@@ -583,6 +589,51 @@
 		})
 		
 		applyCheckboxesState(defaultCheckboxesState)
+		
+		function savePageSettings() {
+			var settings =
+				!checkbox.storeSettings.checked ? { storeSettings: false } :
+					Object.keys(checkbox).reduce(function (res, key) {
+						res[key] = checkbox[key].checked
+						return res
+					}, {})
+			
+			window.localStorage.setItem('page-settings', JSON.stringify(settings))
+		}
+		
+		function restorePageSettings() {
+			var settings = window.localStorage.getItem('page-settings')
+			if (!settings) return // Have no saved settings yet
+			
+			try {
+				settings = JSON.parse(settings)
+				if (typeof settings !== 'object')
+					throw new Error('Saved page settings value is not an object')
+				if (Object.keys(settings).some(function (key) {
+					return typeof settings[key] !== 'boolean'
+				}))
+					throw new Error('Some key of saved page settings is not a boolean value')
+			} catch (e) {
+				// You can just save them again to fix it
+				if (console && console.error) {
+					console.error('Saved page settings are corrupted! Error: ', e)
+					console.error('Saved page settings value is:', '"'+settings+'"')
+				}
+				return
+			}
+			
+			applyCheckboxesState(settings)
+		}
+		
+		if (window.localStorage) {
+			restorePageSettings()
+			Object.keys(checkbox).forEach(function (key) {
+				checkbox[key].addEventListener('change', function () {
+					savePageSettings()
+				})
+			})
+		} else
+			checkbox.storeSettings.closest('label').style.display = 'none'
 		
 		;[].forEach.call(allAudioTags, function (audio) {
 			// First sibling is a text node
@@ -643,6 +694,5 @@
 	</script>
 </body>
 </html>
-<!-- TODO Implement store settings option (window.localStorage) -->
 <!-- TODO Add font size switcher (store this value too) -->
 <!-- TODO Add big play/pause/repeat buttons at the top of playlist -->
