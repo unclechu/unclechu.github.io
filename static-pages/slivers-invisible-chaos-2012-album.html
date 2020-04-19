@@ -25,15 +25,15 @@
 			padding: 20px;
 			min-width: 600px;
 			box-sizing: border-box;
+		}
+		body, button {
+			background: #020300;
+			color: #92462e;
 			text-shadow:
 				0px 0px 4px black,
 				0px 0px 3px black,
 				0px 0px 2px black,
 				0px 0px 1px black;
-		}
-		body, button {
-			background: #020300;
-			color: #92462e;
 		}
 		button {
 			padding: 8px;
@@ -198,6 +198,20 @@
 		dl > dd > label > input:disabled + span::before {
 			cursor: not-allowed;
 		}
+		.playlist-buttons {
+			margin-top: 20px;
+			font-size: 500%;
+		}
+		.playlist-buttons button {
+			background: transparent;
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		.playlist-buttons button:disabled {
+			cursor: not-allowed;
+			color: #555;
+		}
 		section.font-size-switch > ul {
 			text-align: center;
 			margin-bottom: 20px;
@@ -235,6 +249,9 @@
 			max-width: 600px;
 			padding-left: 40px;
 		}
+		html.font-size-2 .playlist-buttons {
+			font-size: 350%;
+		}
 		html.font-size-3 p.info,
 		html.font-size-3 em.info,
 		html.font-size-3 ul,
@@ -243,6 +260,9 @@
 			max-width: 800px;
 			padding-left: 40px;
 			padding-right: 40px;
+		}
+		html.font-size-3 .playlist-buttons {
+			font-size: 350%;
 		}
 		html.font-size-3 body {
 			min-width: 800px;
@@ -288,6 +308,7 @@
 			<h2>Аудиозаписи</h2>
 			<section>
 				<h3>MP3</h3>
+				<div class="js-playlist-buttons"></div>
 				<ol>
 					<li>
 						<h4>Мы создали ложь</h4>
@@ -360,6 +381,7 @@
 					Формат без потерь качества, более требователен
 					к стабильности и пропускной способности интернет-соединения.
 				</em>
+				<div class="js-playlist-buttons"></div>
 				<ol>
 					<li>
 						<h4>Мы создали ложь</h4>
@@ -548,6 +570,135 @@
 		// CSS background-image elements
 		imgResourceFailover(true, document.querySelector('.underlay'))
 	</script>
+	<script type="text/template" id="js-playlist-buttons-template">
+		<div class="playlist-buttons">
+			<button class="js-prev">&#x23EE;</button>
+			<button class="js-play-pause"></button>
+			<button class="js-stop">&#x23F9;</button>
+			<button class="js-next-repeat"></button>
+		</div>
+	</script>
+	<script>
+		// Big playlist buttons handling script
+		
+		var playlistButtonsWraps =
+			document.querySelectorAll('.js-playlist-buttons')
+		
+		// Render them first
+		var playlistButtonsTpl =
+			document.getElementById('js-playlist-buttons-template').innerHTML
+		
+		var playSymbol = '&#x23F5;'
+		var pauseSymbol = '&#x23F8;'
+		var nextSymbol = '&#x23ED;'
+		var repeatSymbol = '&#x21BA;'
+		
+		Object.values(playlistButtonsWraps).forEach(function (wrap) {
+			wrap.innerHTML = playlistButtonsTpl
+			
+			var prev = wrap.querySelector('.js-prev')
+			var playPause = wrap.querySelector('.js-play-pause')
+			var stop = wrap.querySelector('.js-stop')
+			var nextRepeat = wrap.querySelector('.js-next-repeat')
+			
+			var parent = wrap.closest('section')
+			var allTracks = parent.querySelectorAll('audio')
+			
+			var currentTrack
+			var prevTrack
+			var nextTrack
+			
+			function setPrevAndNext() {
+				var li = currentTrack.closest('li')
+				
+				// First sibling is a text node
+				nextTrack = li.nextSibling
+				if (nextTrack) nextTrack = nextTrack.nextSibling
+				if (nextTrack) nextTrack = nextTrack.querySelector('audio')
+				if (!nextTrack) nextTrack = allTracks[0]
+				
+				// First sibling is a text node
+				prevTrack = li.previousSibling
+				if (prevTrack) prevTrack = prevTrack.previousSibling
+				if (prevTrack) prevTrack = prevTrack.querySelector('audio')
+			}
+			
+			function getPlayingTracks() {
+				return Object.values(allTracks)
+					.filter(function (audio) { return !audio.paused })
+			}
+			
+			function updateBtnsState() {
+				var playingCount = getPlayingTracks().length
+				prev.disabled = (playingCount > 1) || !prevTrack
+				playPause.innerHTML = (playingCount > 0) ? pauseSymbol : playSymbol
+				stop.disabled = playingCount < 1
+				
+				nextRepeat.innerHTML =
+					(playingCount < 2) && (nextTrack === allTracks[0]) ?
+						repeatSymbol : nextSymbol
+				
+				nextRepeat.disabled = playingCount > 1
+			}
+			
+			currentTrack = allTracks[0]
+			setPrevAndNext()
+			updateBtnsState()
+			
+			Object.values(allTracks).forEach(function (audio) {
+				audio.addEventListener('play', function () {
+					currentTrack = this
+					setPrevAndNext()
+					updateBtnsState()
+				})
+				
+				audio.addEventListener('pause', function () {
+					updateBtnsState()
+				})
+			})
+			
+			prev.addEventListener('click', function (e) {
+				e.preventDefault()
+				var playingTracks = getPlayingTracks()
+				
+				if (playingTracks.length)
+					playingTracks.forEach(function (el) { el.pause() })
+				
+				if (prevTrack.currentTime > 0) prevTrack.currentTime = 0
+				prevTrack.play()
+			})
+			
+			playPause.addEventListener('click', function (e) {
+				e.preventDefault()
+				var playingTracks = getPlayingTracks()
+				
+				if (playingTracks.length)
+					playingTracks.forEach(function (el) { el.pause() })
+				else
+					currentTrack.play()
+			})
+			
+			stop.addEventListener('click', function (e) {
+				e.preventDefault()
+				
+				getPlayingTracks().forEach(function (el) {
+					el.pause()
+					el.currentTime = 0
+				})
+			})
+			
+			nextRepeat.addEventListener('click', function (e) {
+				e.preventDefault()
+				var playingTracks = getPlayingTracks()
+				
+				if (playingTracks.length)
+					playingTracks.forEach(function (el) { el.pause() })
+				
+				if (nextTrack.currentTime > 0) nextTrack.currentTime = 0
+				nextTrack.play()
+			})
+		})
+	</script>
 	<script type="text/template" id="js-checkboxes-template">
 		<dl>
 			<dt>Плейлист</dt>
@@ -661,8 +812,8 @@
 			document.getElementById('js-reset-settings-to-defaults')
 		
 		function triggerFakeCheckboxesChangeEvent() {
-			Object.values(checkbox).forEach(function (x) {
-				x.dispatchEvent(new Event('change'))
+			Object.values(checkbox).forEach(function (input) {
+				input.dispatchEvent(new Event('change'))
 			})
 		}
 		
@@ -692,14 +843,14 @@
 			// <audio> tracks which are playing at the moment
 			var playingTracks =
 				Object.values(allAudioTags)
-					.filter(function (x) { return !x.paused })
+					.filter(function (el) { return !el.paused })
 			
 			// Stop all playing track but the first one playing
 			// in case there are more than one playing tracks at the moment.
 			if (playingTracks.length > 1) {
 				playingTracks.shift()
 				if (checkbox.oneAtATime.checked)
-					playingTracks.forEach(function (x) { x.pause() })
+					playingTracks.forEach(function (el) { el.pause() })
 			}
 		})
 		
@@ -857,4 +1008,3 @@
 	</script>
 </body>
 </html>
-<!-- TODO Add big play/pause/repeat buttons at the top of playlist -->
