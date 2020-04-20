@@ -3,6 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="author" content="Viacheslav Lotsmanov">
+	<!--
+		The scripts of this page are licensed under GNU AGPL v3.0
+		magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt
+		Copyright © 2020 Viacheslav Lotsmanov
+	-->
 	<title>SLIVERS — Невидимый Хаос</title>
 	<style>
 		/* general reset */
@@ -522,6 +527,7 @@
 		</small>
 	</footer>
 	<script>
+		// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-v3.0
 		// Alternative domain source for images failed to load
 		function imgResourceFailover(isCssBackground, el) {
 			if (isCssBackground && !window.getComputedStyle) return
@@ -564,6 +570,7 @@
 		
 		// CSS background-image elements
 		imgResourceFailover(true, document.querySelector('.underlay'))
+		// @license-end
 	</script>
 	<script type="text/template" id="js-playlist-buttons-template">
 		<div class="playlist-buttons">
@@ -574,6 +581,7 @@
 		</div>
 	</script>
 	<script>
+		// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-v3.0
 		// Big playlist buttons handling script
 		
 		var playlistButtonsWraps =
@@ -693,6 +701,7 @@
 				nextTrack.play()
 			})
 		})
+		// @license-end
 	</script>
 	<script type="text/template" id="js-checkboxes-template">
 		<dl>
@@ -775,6 +784,7 @@
 		</section>
 	</script>
 	<script>
+		// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-v3.0
 		var allAudioTags = document.querySelectorAll('audio')
 		
 		document.getElementById('js-checkboxes').innerHTML =
@@ -1000,6 +1010,7 @@
 				})
 			})
 		})
+		// @license-end
 	</script>
 </body>
 </html>
